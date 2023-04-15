@@ -8,3 +8,5 @@
 7. usamos mongoose para crear una nueva instancia del schema y crear el modelo de uaurio que me servira para conectarme con la base de datos
 8. creamos el router de los endpoints con la siguiente estructura router.<metodo>(<url>,<controller>) => router.get(url,controller)
 9. los controller tienen una request y una response.
+10. habilitar la lectura en .json() de express en el file app.js 
+11. ahora agregamos una validacion en el router en medio de la url y el controller, para capturar los errores de la request creamos un middleware <validationResultRequest> que captura si hay error y frena el controller 
