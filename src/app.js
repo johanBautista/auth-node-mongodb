@@ -1,7 +1,10 @@
+import "dotenv/config";
+import "./database/connectdb.js";
 import express from "express";
 
 const app = express();
 
-app.listen(3000, () => {
-  console.log("🚀 ------------> Server Start...");
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log("🚀 ----------> Server Up! http://localhost:" + PORT);
 });
