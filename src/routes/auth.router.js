@@ -1,11 +1,14 @@
 import { Router } from "express";
-import { allUser, login, register } from "../controllers/auth.controller.js";
+import { allUser, infoUser, login, register } from "../controllers/auth.controller.js";
 import { body } from "express-validator";
 import { validationResultRequest } from "../middlewares/validationResult.js";
+import { requireToken } from "../middlewares/requireToken.js";
 
 const router = Router();
 
 router.get("/", allUser);
+// ejemplo de ruta protegida por token
+router.get("/protected", requireToken, infoUser);
 
 router.post(
   "/register",

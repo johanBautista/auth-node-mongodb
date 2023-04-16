@@ -1,7 +1,18 @@
 import { User } from "../models/User.js";
+import { generateToken } from "../utils/tokenManager.js";
 
 export const allUser = (req, res) => {
   res.json({ success: "true" });
+};
+
+export const infoUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.uid).lean();
+    return res.json({ success: "true", status: "information protected", email: user.email });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: "Error del server" });
+  }
 };
 
 export const register = async (req, res) => {
@@ -31,6 +42,15 @@ export const login = async (req, res) => {
     // Password incorrecto
     if (!passwordResponse) return res.status(403).json({ success: "Email o password incorrecto." });
 
-    return res.json({ success: "Bienvenido correctamente" });
+    //generar jwt
+    const { token, expiresIn } = generateToken(user.id);
+
+    //OPc. enviar cookie
+    // res.cookie("cookie-Token", token, {
+    //   httpOnly: true,
+    //   secure: !(process.env.MODO === "developer"),
+    // });
+
+    return res.json({ success: "Bienvenido correctamente", token: token, expiracion: expiresIn });
   } catch (error) {}
 };
