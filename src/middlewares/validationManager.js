@@ -1,7 +1,8 @@
-import { body, validationResult } from "express-validator";
+import { body, param, validationResult } from "express-validator";
 
 export const validationResultRequest = (req, res, next) => {
   const errors = validationResult(req);
+  console.log("ERRORS ------  > ", errors);
 
   if (!errors.isEmpty()) {
     return res.status(400).json({ error: errors.array() });
@@ -26,5 +27,16 @@ export const bodyRegisterValidator = [
 export const bodyLoginValidator = [
   body("email", "Ingrese un email válido").trim().isEmail().normalizeEmail(),
   body("password", "Contraseña mínimo 6 carácteres").trim().isLength({ min: 6 }),
+  validationResultRequest,
+];
+
+export const bodyTaskValidator = [
+  body("title", "Ingrese un title válido").trim().notEmpty(),
+  body("description", "Ingrese una descripcion").trim().notEmpty(),
+  validationResultRequest,
+];
+
+export const paramsTaskValidator = [
+  param("id", "Formato de Id no valido").trim().notEmpty().escape(),
   validationResultRequest,
 ];

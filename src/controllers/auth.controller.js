@@ -10,7 +10,10 @@ export const register = async (req, res) => {
     user = new User({ email, password });
     await user.save();
 
-    return res.json({ success: "ok register" });
+    const { token, expiresIn } = generateToken(user.id);
+    generateRefreshToken(user.id, res);
+
+    return res.json({ success: "Usuario registrado", token: token, expiracion: expiresIn });
   } catch (error) {
     return res.status(403).json({ error: error.message });
   }
@@ -28,6 +31,7 @@ export const login = async (req, res) => {
 
     const { token, expiresIn } = generateToken(user.id);
     generateRefreshToken(user.id, res);
+
     console.log("🎪 ---> login", user.id, token);
     return res.json({ success: "Bienvenido", token: token, expiracion: expiresIn });
   } catch (error) {
