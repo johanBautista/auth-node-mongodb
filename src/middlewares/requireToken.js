@@ -10,7 +10,6 @@ export const requireToken = (req, res, next) => {
     // get payload
     const { uid } = jwt.verify(token, process.env.JWT_SECRET);
     req.uid = uid;
-    console.log("🌿 -->payload", uid, token);
 
     next();
   } catch (error) {

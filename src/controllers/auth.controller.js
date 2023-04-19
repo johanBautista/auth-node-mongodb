@@ -32,7 +32,6 @@ export const login = async (req, res) => {
     const { token, expiresIn } = generateToken(user.id);
     generateRefreshToken(user.id, res);
 
-    console.log("🎪 ---> login", user.id, token);
     return res.json({ success: "Bienvenido", token: token, expiracion: expiresIn });
   } catch (error) {
     console.log(error);

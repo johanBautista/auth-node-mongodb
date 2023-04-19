@@ -8,7 +8,7 @@ export const requireRefreshToken = (req, res, next) => {
 
     const { uid } = Jwt.verify(refreshTokenCookie, process.env.JWT_REFRESH);
     req.uid = uid;
-    console.log("🍟 ---> refresh tk", uid, refreshTokenCookie);
+    console.log("🍟 ---> refresh tk");
     next();
   } catch (error) {
     res.status(401).json({ error: tokenVerificationErrors[error.message] });
